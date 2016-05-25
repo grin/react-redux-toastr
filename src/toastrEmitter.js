@@ -14,11 +14,5 @@ export const toastrEmitter = {
   success: (...args) => addToToastr('success', args),
   warning: (...args) => addToToastr('warning', args),
   error: (...args) => addToToastr('error', args),
-  clean: () => emitter.emit('clean/toastr'),
-  confirm: (...args) => {
-    emitter.emit('toastr/confirm', {
-      message: args[0].toString(),
-      options: args[1]
-    });
-  }
+  clean: () => emitter.emit('clean/toastr')
 };

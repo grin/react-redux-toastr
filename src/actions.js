@@ -1,4 +1,4 @@
-import {ADD_TOASTR, REMOVE_TOASTR, CLEAN_TOASTR, SHOW_CONFIRM, HIDE_CONFIRM} from './constants';
+import {ADD_TOASTR, REMOVE_TOASTR, CLEAN_TOASTR} from './constants';
 import {mapToToastrMessage} from './utils';
 
 export function addToastrAction(toastr) {
@@ -51,17 +51,5 @@ export function error(...toastr) {
     type: ADD_TOASTR,
     payload: mapToToastrMessage('error', toastr)
   };
-}
 
-export function showConfirm(obj) {
-  return {
-    type: SHOW_CONFIRM,
-    payload: obj
-  };
-}
-
-export function hideConfirm() {
-  return {
-    type: HIDE_CONFIRM
-  };
 }

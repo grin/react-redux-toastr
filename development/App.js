@@ -8,22 +8,17 @@ import ReduxToastr, {toastr} from './../src/';
 import DevTools from './containers/DevTools';
 import config from './../config';
 
-import LongText from './largetext';
 import loremIpsum from 'lorem-ipsum';
 
 class comp extends Component {
   static displayName = 'MMC';
   render() {
     return (
-        <h2>hej</h2>
+      <div>
+        <h1>{this.props.title}</h1>
+        <h2>{this.props.message}</h2>
+      </div>
     );
-  }
-}
-
-class messageComp extends Component {
-  static displayName = 'MMCmessageComp';
-  render() {
-    return <div dangerouslySetInnerHTML={{__html: LongText}} />;
   }
 }
 
@@ -45,6 +40,16 @@ export default class App extends Component {
     }
   }
 
+  renderComp(title) {
+    class myComp extends Component {
+      static displayName = 'component';
+      render() {
+        return <div>{title}</div>;
+      }
+    }
+    return myComp;
+  }
+
   add() {
     toastr.success('success', loremIpsum());
   }
@@ -53,14 +58,13 @@ export default class App extends Component {
     return (
       <Provider store={this.props.store}>
         <div className="wrapper">
-          <ReduxToastr />
+          <ReduxToastr position="top-fw"/>
           <div className="content">
             <button type="button" className="btn btn-success" onClick={this.add.bind(this)}>success</button>
             <button type="button" className="btn btn-primary" onClick={() => toastr.info('## Info', loremIpsum())}>info</button>
             <button type="button" className="btn btn-danger" onClick={() => toastr.error('## Error', {timeOut: 4000, component: comp})}>error</button>
             <button type="button" className="btn btn-warning" onClick={() => toastr.warning('## Warning', loremIpsum())}>warning</button>
-            <button type="button" className="btn btn-default" onClick={() => toastr.message('## Message', {component: messageComp})}>message</button>
-            <button type="button" className="btn btn-default" onClick={() => toastr.confirm(loremIpsum({count: 5}))}>confirm</button>
+            <button type="button" className="btn btn-default" onClick={() => toastr.message('## Message', {component: this.renderComp('Go dag')})}>message</button>
           </div>
           {this.renderDev()}
         </div>

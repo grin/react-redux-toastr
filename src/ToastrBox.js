@@ -24,7 +24,7 @@ export default class ToastrBox extends Component {
   componentDidMount() {
     const {item} = this.props;
     let {timeOut} = item.options;
-    if (typeof timeOut === 'undefined' && item.type !== 'message') {
+    if (typeof timeOut === 'undefined') {
       timeOut = config.timeOut;
     }
 
@@ -53,7 +53,7 @@ export default class ToastrBox extends Component {
   }
 
   mouseLeave() {
-    if (this.isHiding || this.props.item.type !== 'message') {
+    if (this.isHiding) {
       this._setIntervalId(setTimeout(this._removeToastr, 1000));
     }
   }
@@ -113,7 +113,7 @@ export default class ToastrBox extends Component {
     return (
       <div
         ref={(ref) => this.toastrBox = ref}
-        className={cn('toastr', 'animated', this.props.item.type, this.props.item.options.icon)}
+        className={cn('toastr', 'animated', this.props.item.type)}
         onMouseEnter={this.mouseEnter.bind(this)}
         onMouseLeave={this.mouseLeave.bind(this)}
         onClick={this.handleClick.bind(this)}>

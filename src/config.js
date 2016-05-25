@@ -1,8 +1,8 @@
 const config = {};
 
 config.newestOnTop = true;
-config.timeOut = 5000;
-config.transitionIn = 'bounceIn';
-config.transitionOut = 'bounceOut';
+config.timeOut = null;
+config.transitionIn = 'bounceInDown';
+config.transitionOut = 'bounceOutUp';
 
 export default config;
