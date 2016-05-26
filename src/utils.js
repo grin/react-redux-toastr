@@ -8,17 +8,14 @@ export function createReducer(initialState, fnMap) {
 }
 
 function isString(obj) {
-  if (typeof obj == 'string') {
-    return true;
-  }
-  return false;
+  return typeof obj === 'string';
 }
 
 export function mapToToastrMessage(type, array) {
   const obj = {};
   obj.type = type;
 
-  obj.options = array.filter(item => typeof item == 'object')[0] || {};
+  obj.options = array.filter(item => typeof item === 'object')[0] || {};
   if (isString(array[0]) && isString(array[1])) {
     obj.title = array[0];
     obj.message = array[1];
