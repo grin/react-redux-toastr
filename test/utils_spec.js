@@ -16,14 +16,27 @@ describe('mapToToastrMessage', () => {
   });
 
   it('handles only a title', () => {
-    const toastr = mapToToastrMessage(msgType, ['Title']);
-    expect(toastr).to.deep.equal({
+    expect(mapToToastrMessage(msgType, ['Title'])).to.deep.equal({
+      ...type,
+      title: 'Title',
+      options: {}
+    });
+    expect(mapToToastrMessage(msgType, ['Title', null])).to.deep.equal({
       ...type,
       title: 'Title',
       options: {}
     });
   });
 
+  it('handles only a message', () => {
+    const toastr = mapToToastrMessage(msgType, [null, 'Message']);
+    expect(toastr).to.deep.equal({
+      ...type,
+      message: 'Message',
+      options: {}
+    });
+  });
+  
   it('handles no arguments', () => {
     expect(mapToToastrMessage(msgType, [])).to.deep.equal({
       ...type,

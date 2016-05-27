@@ -21,6 +21,8 @@ export function mapToToastrMessage(type, array) {
     obj.message = array[1];
   } else if (isString(array[0]) && !isString(array[1])) {
     obj.title = array[0];
+  } else if (!isString(array[0]) && isString(array[1])) {
+    obj.message = array[1];
   }
 
   return obj;
