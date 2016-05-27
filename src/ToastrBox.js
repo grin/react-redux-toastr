@@ -109,6 +109,23 @@ export default class ToastrBox extends Component {
     this.isHiding = val;
   };
 
+  renderContent() {
+    if (this.props.item.options.component) {
+      return (
+        <div className="toastrContent">
+          <this.props.item.options.component {...this.props.item}/>
+        </div>
+      );
+    } else {
+      return (
+        <div className="toastrContent">
+          {this.props.item.title && <div className="title">{this.props.item.title}</div>}
+          {this.props.item.message && <div className="message">{this.props.item.message}</div>}
+        </div>
+      );
+    }
+  }
+
   render() {
     return (
       <div
@@ -117,11 +134,7 @@ export default class ToastrBox extends Component {
         onMouseEnter={this.mouseEnter.bind(this)}
         onMouseLeave={this.mouseLeave.bind(this)}
         onClick={this.handleClick.bind(this)}>
-        <div className="message-holder">
-          {this.props.item.title && <div className="title">{this.props.item.title}</div>}
-          {this.props.item.message && <div className="message">{this.props.item.message}</div>}
-          {this.props.item.options.component && <this.props.item.options.component {...this.props.item}/>}
-        </div>
+        {this.renderContent()}
       </div>
     );
   }
