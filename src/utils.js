@@ -7,65 +7,25 @@ export function createReducer(initialState, fnMap) {
   };
 }
 
-export function checkPositionName(name) {
-  const positions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
-  const isValidName = positions.indexOf(name);
-
-  if (isValidName > -1) {
-    return name;
-  }
-  return positions[1];
-}
-
 function isString(obj) {
-  if (typeof obj == 'string') {
-    return true;
-  }
-  return false;
+  return typeof obj === 'string';
 }
 
 export function mapToToastrMessage(type, array) {
   const obj = {};
   obj.type = type;
 
-  obj.options = array.filter(item => typeof item == 'object')[0] || {};
-
-  if (!obj.options.icon) {
-    obj.options.icon = mapToIcon(type);
-  }
-
+  obj.options = array.filter(item => item !== null && typeof item === 'object')[0] || {};
   if (isString(array[0]) && isString(array[1])) {
     obj.title = array[0];
     obj.message = array[1];
   } else if (isString(array[0]) && !isString(array[1])) {
     obj.title = array[0];
-  } else {
-    obj.message = array[0];
+  } else if (!isString(array[0]) && isString(array[1])) {
+    obj.message = array[1];
   }
 
   return obj;
-}
-
-export function mapToIcon(type) {
-  switch (type) {
-    case 'info':
-      return 'icon-information-circle';
-    case 'success':
-      return 'icon-check-1';
-    case 'warning':
-      return 'icon-exclamation-triangle';
-    case 'error':
-      return 'icon-exclamation-alert';
-    default:
-      return type;
-  }
-}
-
-export function hasProperty(obj, property) {
-  if (obj == null) {
-    return false;
-  }
-  return typeof obj[property] !== 'undefined';
 }
 
 export function guid() {

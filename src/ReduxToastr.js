@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import cn from 'classnames';
 import ToastrBox from './ToastrBox';
-import ToastrConfirm from './ToastrConfirm';
 import * as tActions from './actions';
 import {EE} from './toastrEmitter';
 import config from './config';
@@ -18,18 +17,13 @@ export default class ReduxToastr extends Component {
     options: PropTypes.object,
     position: PropTypes.string,
     newestOnTop: PropTypes.bool,
-    timeOut: PropTypes.number,
-    confirmOptions: PropTypes.object
+    timeOut: PropTypes.number
   };
 
   static defaultProps = {
     position: 'top-right',
     newestOnTop: true,
-    timeOut: 5000,
-    confirmOptions: {
-      okText: 'ok',
-      cancelText: 'cancel'
-    }
+    timeOut: null
   };
 
   constructor(props) {
@@ -39,14 +33,12 @@ export default class ReduxToastr extends Component {
   }
 
   componentDidMount() {
-    const {addToastrAction, showConfirm, clean} = this.props;
-    EE.on('toastr/confirm', showConfirm);
+    const {addToastrAction, clean} = this.props;
     EE.on('add/toastr', addToastrAction);
     EE.on('clean/toastr', clean);
   }
 
   componentWillUnmount() {
-    EE.removeListener('toastr/confirm');
     EE.removeListener('add/toastr');
     EE.removeListener('clean/toastr');
   }
@@ -54,9 +46,6 @@ export default class ReduxToastr extends Component {
   render() {
     return (
       <div className={cn('redux-toastr', this.props.position)}>
-        {this.props.toastr &&
-            <ToastrConfirm confirm={this.props.toastr.confirm} {...this.props}/>
-        }
         {this.props.toastr &&
             this.props.toastr.toastrs.map(item => <ToastrBox key={item.id} item={item}  {...this.props}/>)
         }
