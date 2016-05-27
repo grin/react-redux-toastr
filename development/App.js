@@ -10,8 +10,20 @@ import config from './../config';
 
 import loremIpsum from 'lorem-ipsum';
 
-class comp extends Component {
-  static displayName = 'MMC';
+class InfoComp extends Component {
+  static displayName = 'InfoComp';
+  render() {
+    const {title} = this.props.options.props;
+    return (
+      <div>
+        <h1>{title}</h1>
+      </div>
+    );
+  }
+}
+
+class ErrorComp extends Component {
+  static displayName = 'ErrorComp';
   render() {
     return (
       <div>
@@ -43,6 +55,7 @@ export default class App extends Component {
   renderComp(title) {
     class myComp extends Component {
       static displayName = 'component';
+
       render() {
         return <div>{title}</div>;
       }
@@ -51,7 +64,7 @@ export default class App extends Component {
   }
 
   add() {
-    toastr.success('success', loremIpsum());
+    toastr.success('Success title', loremIpsum());
   }
 
   render() {
@@ -60,11 +73,25 @@ export default class App extends Component {
         <div className="wrapper">
           <ReduxToastr position="top-fw"/>
           <div className="content">
-            <button type="button" className="btn btn-success" onClick={this.add.bind(this)}>success</button>
-            <button type="button" className="btn btn-primary" onClick={() => toastr.info('## Info', loremIpsum())}>info</button>
-            <button type="button" className="btn btn-danger" onClick={() => toastr.error('## Error', {timeOut: 4000, component: comp})}>error</button>
-            <button type="button" className="btn btn-warning" onClick={() => toastr.warning('## Warning', loremIpsum())}>warning</button>
-            <button type="button" className="btn btn-default" onClick={() => toastr.message('## Message', {component: this.renderComp('Go dag')})}>message</button>
+            <button type="button" className="btn btn-success" onClick={this.add.bind(this)}>Success</button>
+            <button type="button" className="btn btn-primary"
+                    onClick={() => toastr.info(null, null, {component: InfoComp, props: {title: 'Look here!'}})}>
+              Info
+            </button>
+            <button type="button" className="btn btn-danger"
+                    onClick={() => toastr.error(
+                    'Error title',
+                    'Error message',
+                    {timeOut: 4000, component: ErrorComp}
+                    )}>
+              Error
+            </button>
+            <button type="button" className="btn btn-warning"
+                    onClick={() => toastr.warning('Warning title', loremIpsum())}>Warning
+            </button>
+            <button type="button" className="btn btn-default"
+                    onClick={() => toastr.message('Message title', {component: this.renderComp('God dag')})}>Message
+            </button>
           </div>
           {this.renderDev()}
         </div>

@@ -15,14 +15,12 @@ export function mapToToastrMessage(type, array) {
   const obj = {};
   obj.type = type;
 
-  obj.options = array.filter(item => typeof item === 'object')[0] || {};
+  obj.options = array.filter(item => item !== null && typeof item === 'object')[0] || {};
   if (isString(array[0]) && isString(array[1])) {
     obj.title = array[0];
     obj.message = array[1];
   } else if (isString(array[0]) && !isString(array[1])) {
     obj.title = array[0];
-  } else {
-    obj.message = array[0];
   }
 
   return obj;
