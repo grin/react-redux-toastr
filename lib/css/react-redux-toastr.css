@@ -192,7 +192,7 @@
   cursor: pointer;
   box-shadow: 0 2px 2px #777;
 }
-.redux-toastr .toastr .message-holder {
+.redux-toastr .toastr .toastrContent {
   width: 100%;
   position: relative;
 }
