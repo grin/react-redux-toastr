@@ -1,4 +1,6 @@
-##`react-redux-toastr` [demo](http://diegoddox.github.io/react-redux-toastr/)
+##`react-redux-toastr`
+
+This is a fork of http://diegoddox.github.io/react-redux-toastr/
 
 `react-redux-toastr` is a React toastr message implemented with [Redux](https://github.com/rackt/redux), primary consists of three things: a reducer, toastr emitter and a React component.
 
@@ -8,15 +10,11 @@ The reducer listens to dispatched actions from the component to maintain the `to
 
 ##### 1. Installation
 
-`npm install --save react-redux-toastr`
+`npm install --save inspera/react-redux-toastr`
 
 ##### 2. Add the `react-redux-toastr` css link to your app
-##### NOTE: This can be change at anytime
-```
-<link href="http://diegoddox.github.io/react-redux-toastr/3.0.1/react-redux-toastr.min.css" rel="stylesheet" type="text/css">
-```
 
-Or import the less file into to your project.
+Import or copy the less file into to your project.
 `import 'react-redux-toastr/src/less/index.less'`
 
 ##### 3. The third thing you need to do is to add the `react-redux-toastr` `reducer` to Redux.
@@ -55,12 +53,12 @@ import ReduxToastr from 'react-redux-toastr'
 default props: In case you don't pass the props
 
 ```
-timeOut: 5000,
+timeOut: null,
 newestOnTop: true,
 position: 'top-right'
 ```
 
-positions: `top-left` `top-right`  `bottom-left` and `bottom-right`
+positions: `top-left` `top-right`  `bottom-left` `bottom-right` `top-fw`
 
 ##### 5. Add the `react-redux-toastr`  `toastr` emitter
 The `toastr` method use [eventemitter3](https://github.com/primus/eventemitter3) to dispatch the actions
@@ -96,79 +94,34 @@ constructor(props) {
 ```
 
 # Toastr methods
-##### Toastr: `success` `info` `warning` and `error`
+##### Toastr: `success` `info` `warning` `error` and `message`
 Each of these methods can take up to three arguments the `title` a `message` and `options`.
-In `options` you can specify the `timeout` `icon` `onShowComplete` and `onHideComplete`.
-
-`icon` can be one of the following:
-- `'icon-close-round'`
-- `'icon-information-circle'`
-- `'icon-check-1'`
-- `'icon-exclamation-triangle'`
-- `'icon-exclamation-alert'`
-
+In `options` you can specify the `timeout` `onShowComplete` `onHideComplete` and `component`.
+The `component` must be a React component. It will receive the title, message and options object as props.
 
 ``` javascript
 import {toastr} from 'react-redux-toastr'
 
 const toastrOptions = {
   timeOut: 3000,
-  icon: 'my-icon-name',
   onShowComplete: () => console.log('SHOW: animation is done'),
   onHideComplete: () => console.log('HIDE: animation is done'),
   component: React.Component
 }
 
 toastr.success('Title', 'Message', toastrOptions)
-toastr.info('The message', toastrOptions)
+toastr.info('Only a title', toastrOptions)
+toastr.info(null, 'Only a message', toastrOptions)
 toastr.warning('The title', 'The message')
-toastr.error('The message')
-```
-
-##### Toastr: `message`
-This one is in case you wanna show a large amount of information, unlike the other methods above this will not close automatically unless you provide a `timeout` in the `message` options.
-
-```javascript
-const toastrMessageOptions = {
-  timeOut: 1000,
-  onShowComplete: () => console.log('SHOW: animation is done'),
-  onHideComplete: () => console.log('HIDE: animation is done'),
-  component: React.Component
-};
-toastr.message('Title', toastrMessageOptions)
-```
-
-##### Toastr: `confirm`
-The confirm method takes two arguments, the first is the message the second is a object where you can specify what will happen when the user clicks on `ok` or `cancel` button
-
-NOTE: You can only have one at a time, right now if you have one `confirm` and you fire another it will be ignored.
-
-```javascript
-const toastrConfirmOptions = {
-  onOk: () => console.log('OK: clicked'),
-  onCancel: () => console.log('CANCEL: clicked')
-};
-toastr.confirm('Are you sure about that!', toastrConfirmOptions)
-```
-
-You can change the `ok` and `cancel` text by passing the `confirm` props to the `ReduxToastr` component
-
-```javascript
-const options = {
-  okText: 'confirm text',
-  cancelText: 'cancel text'
-};
-<ReduxToastr confirmOptions={options}/>
+toastr.error(toastrOptions)
 ```
 
 # Run a local demo
 ```
-git clone https://github.com/diegoddox/react-redux-toastr.git
+git clone https://github.com/inspera/react-redux-toastr.git
 cd react-redux-toastr
 npm install
 npm start
 ```
 open your browser at `http://localhost:3000`
 
-# TODO
-create test.
