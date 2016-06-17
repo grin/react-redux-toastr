@@ -53,9 +53,7 @@ export default class ToastrBox extends Component {
   }
 
   mouseLeave() {
-    if (this.isHiding) {
-      this._setIntervalId(setTimeout(this._removeToastr, 1000));
-    }
+    this._setIntervalId(setTimeout(this._removeToastr, 1000));
   }
 
   _onAnimationComplite = () => {
